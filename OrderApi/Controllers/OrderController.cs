@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace OrderApi.Controllers
 {
@@ -8,8 +9,10 @@ namespace OrderApi.Controllers
     {
 
         [HttpGet]
-        public IEnumerable<Order> Get()
+        [OutputCache]
+        public async Task<IEnumerable<Order>> Get()
         {
+            await Task.Delay(5000);
             var orders = new List<Order>
             {
                 new(1, "John Doe", "Laptop"),
