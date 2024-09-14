@@ -1,15 +1,19 @@
 using ApiGateway.Caching;
 using ApiGateway.Configurations;
+using ApiGateway.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddReverseProxy()
-    //.LoadFromConfig(builder.Configuration.GetSection("ApiGateway"));
-    .LoadFromMemory(Configuration.GetRoutes(), Configuration.GetClusters());
+//builder.Services.AddReverseProxy()
+//.LoadFromConfig(builder.Configuration.GetSection("ApiGateway"));
+//    .LoadFromMemory(Configuration.GetRoutes(), Configuration.GetClusters());
+builder.Services.AddRequestAndResponseTransformation(builder.Configuration);
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
 var app = builder.Build();
+
+app.UseRRS();
 
 app.MapReverseProxy();
 //app.MapReverseProxy(proxyPipeline =>
