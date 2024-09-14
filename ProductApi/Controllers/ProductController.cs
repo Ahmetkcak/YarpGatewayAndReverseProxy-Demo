@@ -14,7 +14,7 @@ namespace ProductApi.Controllers
 
 
         [HttpGet]
-        [OutputCache]
+        //[OutputCache]
         public async Task<IActionResult> Get()
         {
             await Task.Delay(4000);

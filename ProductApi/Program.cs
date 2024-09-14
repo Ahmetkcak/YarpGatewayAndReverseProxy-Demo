@@ -6,7 +6,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddOutputCache();
+//builder.Services.AddOutputCache();
 
 var app = builder.Build();
 
@@ -18,7 +18,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseOutputCache();   
+
+//app.UseOutputCache();   
 
 app.UseAuthorization();
 

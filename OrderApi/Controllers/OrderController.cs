@@ -9,7 +9,7 @@ namespace OrderApi.Controllers
     {
 
         [HttpGet]
-        [OutputCache]
+        //[OutputCache]
         public async Task<IEnumerable<Order>> Get()
         {
             await Task.Delay(5000);
