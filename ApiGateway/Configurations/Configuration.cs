@@ -1,4 +1,5 @@
 ﻿using Yarp.ReverseProxy.Configuration;
+using Yarp.ReverseProxy.LoadBalancing;
 
 namespace ApiGateway.Configurations;
 
@@ -31,7 +32,7 @@ public static class Configuration
         ];
     }
 
-    public static IReadOnlyList<ClusterConfig> GetClusters() 
+    public static IReadOnlyList<ClusterConfig> GetClusters()
     {
         return
         [
@@ -41,14 +42,11 @@ public static class Configuration
                 ClusterId = "product-cluster", //unique identifier for this cluster
                 Destinations = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase)
                 {
-                    {
-                        "product-destination",
-                        new DestinationConfig
-                        {
-                            Address = "http://localhost:5001" //address of the destination
-                        }
-                    }
-                }
+                    {"product-destination-1",new DestinationConfig{Address = "http://localhost:5001"}},
+                    {"product-destination-2",new DestinationConfig{Address = "http://localhost:5003"}},
+                    {"product-destination-3",new DestinationConfig{Address = "http://localhost:5004"}}
+                },
+                LoadBalancingPolicy = LoadBalancingPolicies.RoundRobin
             },
             //order api
             new ClusterConfig
@@ -56,13 +54,7 @@ public static class Configuration
                 ClusterId = "order-cluster", //unique identifier for this cluster
                 Destinations = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase)
                 {
-                    {
-                        "order-destination",
-                        new DestinationConfig
-                        {
-                            Address = "http://localhost:5002" //address of the destination
-                        }
-                    }
+                    { "order-destination",new DestinationConfig {Address = "http://localhost:5002"}}
                 }
             }
         ];
